@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  company-api:
+    build: .
+    image: company-api
+    container_name: company-api
+    command: /app/main
+    ports:
+      - 8080:8080
+    depends_on:
+      - company-db
+  company-db:
+    image: mongo:4.0.4
+    container_name: company-db
+    ports:
+      - 27017-27019:27017-27019
