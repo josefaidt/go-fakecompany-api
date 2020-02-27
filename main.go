@@ -4,14 +4,15 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"log"
-	"net/http"
-	"time"
 )
 
 var client *mongo.Client
@@ -76,7 +77,7 @@ func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
 func main() {
 	fmt.Println("starting the application")
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+	clientOptions := options.Client().ApplyURI("mongodb://company-db:27017")
 	client, _ = mongo.Connect(ctx, clientOptions)
 	router := mux.NewRouter()
 	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
